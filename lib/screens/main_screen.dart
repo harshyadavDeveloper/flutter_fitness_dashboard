@@ -17,7 +17,7 @@ class MainScreen extends StatelessWidget {
                 child: SideNavWidget(),
               ),
             ),
-            const Expanded(flex: 7, child: DashboardWidget()),
+            Expanded(flex: 7, child: DashboardWidget()),
             Expanded(
               flex: 3,
               child: Container(color: Colors.green),

@@ -56,19 +56,28 @@ class LineChartCard extends StatelessWidget {
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
+                      reservedSize: 40, // space for labels
                       getTitlesWidget: (double value, TitleMeta meta) {
-                        return data.leftTitle[value.toInt()] != null
-                            ? SideTitleWidget(
-                                meta: meta,
-                                child: Text(
-                                  data.leftTitle[value.toInt()].toString(),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey[400],
-                                  ),
-                                ),
-                              )
-                            : const SizedBox();
+                        String text;
+                        if (value == 0) {
+                          text = '0';
+                        } else if (value % 20 == 0) {
+                          // Convert to K (e.g., 20 → 2K, 40 → 4K, etc.)
+                          text = '${(value ~/ 20) * 2}K';
+                        } else {
+                          return const SizedBox.shrink();
+                        }
+
+                        return SideTitleWidget(
+                          meta: meta,
+                          child: Text(
+                            text,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
