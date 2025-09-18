@@ -8,15 +8,14 @@ class LineChartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = LineChartDataa(); // ✅ dynamic data object
+    final data = LineChartDataa();
 
     return CardView(
-      // ❌ remove 'const' because it contains dynamic content
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Steps OverView",
+            "Steps Overview",
             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 20),
@@ -41,7 +40,6 @@ class LineChartCard extends StatelessWidget {
                       getTitlesWidget: (double value, TitleMeta meta) {
                         return data.bottomTitle[value.toInt()] != null
                             ? SideTitleWidget(
-                                // axisSide: meta.axisSide,
                                 meta: meta,
                                 child: Text(
                                   data.bottomTitle[value.toInt()].toString(),
@@ -61,7 +59,6 @@ class LineChartCard extends StatelessWidget {
                       getTitlesWidget: (double value, TitleMeta meta) {
                         return data.leftTitle[value.toInt()] != null
                             ? SideTitleWidget(
-                                // axisSide: meta.axisSide,
                                 meta: meta,
                                 child: Text(
                                   data.leftTitle[value.toInt()].toString(),
@@ -76,7 +73,24 @@ class LineChartCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Add other properties if necessary like borderData, lineBarsData, etc.
+                // ✅ This is where your data is added
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: data.spots,
+                    isCurved: true, // makes it smooth
+                    barWidth: 3,
+                    color: Colors.blueAccent,
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: Colors.blueAccent.withOpacity(0.2),
+                    ),
+                    dotData: FlDotData(show: false), // hide dots
+                  ),
+                ],
+                borderData: FlBorderData(
+                  show: true,
+                  border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                ),
               ),
             ),
           ),
